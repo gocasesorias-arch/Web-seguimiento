@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de Capacitaciones — Web App (Sin SharePoint)</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <h1>Gestión de Capacitaciones</h1>
+    </div>
+    <nav class="actions">
+      <button id="btnExport" title="Exportar JSON">Exportar</button>
+      <label class="file-btn" title="Importar JSON">
+        Importar <input type="file" id="fileImport" accept="application/json" hidden />
+      </label>
+      <button id="btnReset" class="danger" title="Vaciar base local">Reset</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Nuevo Curso</h2>
+      <div class="grid">
+        <label>Nombre <input id="cNombre" placeholder="p.ej., EPF 5-7"/></label>
+        <label>Objetivo <input id="cObjetivo" placeholder="Breve objetivo"/></label>
+        <label>Gerencia <input id="cGerencia" placeholder="VP-Mina / VP-EO / etc."/></label>
+        <label>Modalidad
+          <select id="cModalidad">
+            <option>Presencial</option>
+            <option>Online</option>
+            <option>Híbrida</option>
+          </select>
+        </label>
+        <label>Horas <input id="cHoras" type="number" min="0" value="8"/></label>
+        <label>Participantes <input id="cParticipantes" type="number" min="0" value="12"/></label>
+        <label>OTEC <input id="cOTEC" placeholder="Proveedor / OTEC"/></label>
+      </div>
+      <button id="btnAddCurso">Agregar curso</button>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Cursos</h2>
+        <div class="filters">
+          <label>Gerencia
+            <select id="fGerencia">
+              <option value="">Todas</option>
+            </select>
+          </label>
+          <label>Estado
+            <select id="fEstado">
+              <option value="">Todos</option>
+              <option>Pendiente</option>
+              <option>Planificado</option>
+              <option>En Proceso</option>
+              <option>Programado</option>
+              <option>En Ejecución</option>
+              <option>Realizado</option>
+              <option>Suspendido</option>
+              <option>Postergado</option>
+            </select>
+          </label>
+          <input id="fBuscar" placeholder="Buscar por nombre/OTEC..." />
+        </div>
+      </div>
+
+      <div id="stats" class="stats"></div>
+
+      <table class="tabla" id="tblCursos">
+        <thead>
+          <tr>
+            <th>Curso</th><th>Gerencia</th><th>Estado</th><th>Modalidad</th>
+            <th>Horas</th><th>Part.</th><th>OTEC</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="panel" id="panelGestion" hidden>
+      <div class="panel-head">
+        <h2>Gestión de Hitos — <span id="gCurso"></span> <small id="gEstado"></small></h2>
+        <div class="spacer"></div>
+        <button id="btnSuspender" class="warn">Suspender</button>
+        <button id="btnPostergar" class="warn">Postergar</button>
+      </div>
+      <ol id="listaHitos" class="hitos"></ol>
+      <div class="h-checks">
+        <label><input type="checkbox" id="h1"> H1</label>
+        <label><input type="checkbox" id="h2"> H2</label>
+        <label><input type="checkbox" id="h3"> H3</label>
+        <label><input type="checkbox" id="h4"> H4</label>
+      </div>
+      <p class="hint">Cuando completes 4/4, el curso avanza automáticamente al siguiente estado.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Base local: navegador (localStorage). Puedes exportar e importar JSON para versionar en GitHub.</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
